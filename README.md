@@ -24,7 +24,19 @@
         .实战基本元素         .实战操作符                   .实战subscribeOn             .实战模仿整体变换
                                                             .剖析observeOn原理
                                                             .实战observeOn
+        学习流程：
+            抛出思想，阐述理论原理 ---->
+            现实案例，解释落地思想 ---->
+            从简单代码示例入手，剖析源码实现，和源码设计思想 ---->
+            项目案例实战，加深理解。
+            
 ##    3.代码实战
+        RxJava + Retrofit        ---->        RxJava + MVP              ---->       RxJava + Retrofit + MVP
+        
+        .利用CallAdapter进行适配              .MVP模式概念和分层思想                .一个接口数据依赖于另一个接口
+        .将返回值转换成Observable对象         .RxJava + Retrofit作为M层提供数据     .不用RxBinding
+                                                                                    .如何实现防抖动
+                                                                                    .如何实现进行下一个请求，取消上个请求
         
         
 ##第3章 RxJava基本元素
