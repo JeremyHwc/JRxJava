@@ -48,17 +48,99 @@
 
 ## 第3章 RxJava基本元素
 ### 3-1 简单介绍及回顾RxJava
-    RxJava简介
+    RxJava简介：
         A libarary for composing **asynchronous** and **eventbased** programs by using 
     observable sequences.(异步的，RxJava是一个异步的库，基于回调的；基于事件的，事件分发的库，消息传递的库)
-    RxJava代码实例
+    
+    RxJava代码实例：
         
-    RxJava基本元素
-        Observable
-        Observer
-        Subscription
-        OnSubscribe
+    RxJava1基本元素：
+        Observable ---> 观察得到的---被观察者，通过Observable创建一个可观察的序列（create方法），通过subscribe()去注册一个观察者
+        Observer ---> 用于接受数据的---观察者，作为Observable的subscribe方法的参数
+        Subscription ---> 订阅，用于描述被观察者和观察者之间的关系，用于取消订阅和获取当前的订阅状态，
+        OnSubscribe ---> 当订阅时会出发此接口调用，在Observable内部，实际作用是向订阅者发射数据
+        Subscriber ---> 实现了Observer和Subscription，只有自己才能阻止自己
+        
+    RxJava1基本元素源码分析：
+    
+    流程简述：Observable通过create()方法传入Observable.OnSubscribe对象构造一个Observable对象，然后Observable对象通过subscribe()方法
+                      调用Observable.OnSubscribe的call方法。
+                      
+            疑问：在call方法里面调用subscriber的onNext()发送事件，Observer是怎么收到的？
+            解答：subscriber是进行封装过的Observer，call()方法里面调用了subscriber的onNext()，onCompleted()
+                    方法，实际就是调用了Observer的onNext()，onCompleted()方法。不过为什么要这么写还需要斟酌一下。
+            
+            现实中的案例 --- 打电话
+            
+            UML图
+            Observable<T>
+            
+    背压概念：
+        异步环境下产生的问题
+        发送和处理速度不统一
+        是一种流速控制解决策略
+        
+        生产者和消费者
+        
+        实例分析：
+            一个装满的快递箱，蜂巢快递
+            
+    RxJava2的基本元素：
+    
+        RxJava2基本元素源码分析（无背压）
+        
+            Observable
+                观察得到的 --- 被观察者，不支持背压
+                通过Observable创建一个可观察的序列（create方法）
+                通过subscribe()去注册一个观察者
+                
+            Observer
+                用于接受数据 --- 观察者
+                作为Observable的subscribe方法的参数
+                
+            Disposable（类似于RxJava1中的Subscription，和其作用相当）
+                用于取消订阅和获取当前的订阅状态
+            
+            ObservableOnSubscribe
+                当订阅时会出发此接口调用
+                在Observable内部，实际作用是向观察者发射数据
+                
+            Emitter
+                一个发射数据的接口，和Observer的方法类似
+                本质是对observer和Subscriber的包装
+        
+        流程简述：
+                @Override
+                protected void subscribeActual(Observer<? super T> observer) {
+                    CreateEmitter<T> parent = new CreateEmitter<T>(observer);
+                    observer.onSubscribe(parent);
+            
+                    try {
+                        source.subscribe(parent);
+                    } catch (Throwable ex) {
+                        Exceptions.throwIfFatal(ex);
+                        parent.onError(ex);
+                    }
+                }
+        
+            Observable 通过 create() 方法，传入 ObservableOnSubscribe 对象构建Observable对象，这里会构造出ObservableCreate对象，
+            Observable 通过 subscribe()方法订阅Observer，进而调用ObservableCreate对象里面的 subscribeActual()方法，
+            在这个方法里面会构造出CreateEmitter()，其实现了Disposable和ObservableEmitter接口，进而调用了Observer的onSubscribe()方法和
+            ObservableOnSubscribe的subscribe()方法，就开始了事件流程。本质和RxJava1里面是一样的，最终都是通过observer调用onNext，onError
+            onComplete()等方法
+            
+### 3-6 RxJava2基本元素源码分析(有背压)
+    RxJava2 有背压时的基本元素
+        Flowable
         Subscriber
+        Subscription
+        FlowableOnSubscribe
+        Emitter
+        
+    Flowable 和 Observable 的实现方式及原理是一样的，只是Flowable里面多了一个背压策略。
+    
+        
+    
     
     
     

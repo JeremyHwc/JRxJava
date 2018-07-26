@@ -61,7 +61,8 @@ public class Lesson3_1Activity extends AppCompatActivity {
         findViewById(R.id.btnRxJava2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Observable.create(new ObservableOnSubscribe<String>() {
+                //1.ObservableOnSubscribe
+                ObservableOnSubscribe<String> observableOnSubscribe = new ObservableOnSubscribe<String>() {
                     @Override
                     public void subscribe(ObservableEmitter<String> e) throws Exception {
                         if (!e.isDisposed()) {
@@ -78,7 +79,12 @@ public class Lesson3_1Activity extends AppCompatActivity {
                             e.onComplete();
                         }
                     }
-                }).subscribe(new Observer<String>() {
+                };
+
+                //2.Observable
+                Observable<String> observable = Observable.create(observableOnSubscribe);
+                //3.observer
+                Observer<String> observer = new Observer<String>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         System.out.println("onSubscribe");
@@ -98,9 +104,14 @@ public class Lesson3_1Activity extends AppCompatActivity {
                     public void onComplete() {
                         System.out.println("onCompleted");
                     }
-                });
+                };
+                //4.订阅
+                observable.subscribe(observer);
 
-                Flowable.create(new FlowableOnSubscribe<String>() {
+
+                //======================================================================================有背压
+                //1.
+                FlowableOnSubscribe<String> flowableOnSubscribe = new FlowableOnSubscribe<String>() {
                     @Override
                     public void subscribe(FlowableEmitter<String> e) throws Exception {
                         if (!e.isCancelled()) {
@@ -108,7 +119,11 @@ public class Lesson3_1Activity extends AppCompatActivity {
                             e.onComplete();
                         }
                     }
-                }, BackpressureStrategy.DROP).subscribe(new Subscriber<String>() {
+                };
+                //2.实质是FlowableCreate
+                Flowable<String> flowable = Flowable.create(flowableOnSubscribe, BackpressureStrategy.DROP);
+                //3.
+                Subscriber<String> subscriber = new Subscriber<String>() {
                     @Override
                     public void onSubscribe(Subscription s) {
                         s.request(Long.MAX_VALUE);
@@ -129,7 +144,9 @@ public class Lesson3_1Activity extends AppCompatActivity {
                     public void onComplete() {
                         System.out.println("onCompleted");
                     }
-                });
+                };
+                //4.
+                flowable.subscribe(subscriber);
             }
         });
     }

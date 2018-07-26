@@ -21,7 +21,7 @@ public class Lesson3_1Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Subscription tSubscription = Observable.create(new Observable.OnSubscribe<String>() {
+                Observable.OnSubscribe<String> onSubscribe = new Observable.OnSubscribe<String>() {
                     @Override
                     public void call(Subscriber<? super String> subscriber) {
                         if (!subscriber.isUnsubscribed()) {
@@ -29,7 +29,12 @@ public class Lesson3_1Activity extends AppCompatActivity {
                             subscriber.onCompleted();
                         }
                     }
-                }).subscribe(new Observer<String>() {
+                };
+
+                Observable<String> observable = Observable.create(onSubscribe);
+
+                Observer<String> observer = new Observer<String>() {
+
                     @Override
                     public void onCompleted() {
                         System.out.println("onCompleted");
@@ -44,7 +49,9 @@ public class Lesson3_1Activity extends AppCompatActivity {
                     public void onNext(String s) {
                         System.out.println("onNext:" + s);
                     }
-                });
+                };
+
+                Subscription tSubscription = observable.subscribe(observer);
             }
         });
 
