@@ -139,7 +139,14 @@
         
     Flowable 和 Observable 的实现方式及原理是一样的，只是Flowable里面多了一个背压策略。
     
-        
+### 3-7 实战基本元素(RxJava1)上   
+    五大元素.仿
+        RxJava1 元素实战：
+            Observable ---> Caller
+            Observer ---> Callee
+            Subscription ---> Calling
+            OnSubscribe ---> OnCall
+            Subscriber ---> Receiver  
     
     
     

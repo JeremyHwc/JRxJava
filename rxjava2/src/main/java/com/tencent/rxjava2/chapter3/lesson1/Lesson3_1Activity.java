@@ -19,8 +19,6 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
-;
-
 public class Lesson3_1Activity extends AppCompatActivity {
 
     @Override
@@ -137,7 +135,7 @@ public class Lesson3_1Activity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable t) {
-
+                        System.out.println("onError:" + t.toString());
                     }
 
                     @Override
