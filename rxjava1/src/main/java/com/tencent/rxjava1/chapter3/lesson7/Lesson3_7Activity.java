@@ -4,6 +4,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.sxdsf.async.imitate2.backpressure.Drop;
+import com.sxdsf.async.imitate2.backpressure.Receiver;
+import com.sxdsf.async.imitate2.backpressure.Telephoner;
+import com.sxdsf.async.imitate2.backpressure.TelephonerEmitter;
+import com.sxdsf.async.imitate2.backpressure.TelephonerOnCall;
 import com.tencent.rxjava1.R;
 
 
@@ -16,34 +21,34 @@ public class Lesson3_7Activity extends AppCompatActivity {
         findViewById(R.id.async).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Telephoner.create(new TelephonerOnCall<String>() {
-//                    @Override
-//                    public void call(TelephonerEmitter<String> telephonerEmitter) {
-//                        telephonerEmitter.onReceive("test");
-//                        telephonerEmitter.onCompleted();
-//                    }
-//                }).call(new Receiver<String>() {
-//                    @Override
-//                    public void onCall(Drop d) {
-//                        d.request(Long.MAX_VALUE);
-//                        System.out.println("onCall");
-//                    }
-//
-//                    @Override
-//                    public void onReceive(String s) {
-//                        System.out.println("onReceive:" + s);
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable t) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onCompleted() {
-//                        System.out.println("onCompleted");
-//                    }
-//                });
+                Telephoner.create(new TelephonerOnCall<String>() {
+                    @Override
+                    public void call(TelephonerEmitter<String> telephonerEmitter) {
+                        telephonerEmitter.onReceive("test");
+                        telephonerEmitter.onCompleted();
+                    }
+                }).call(new Receiver<String>() {
+                    @Override
+                    public void onCall(Drop d) {
+                        d.request(Long.MAX_VALUE);
+                        System.out.println("onCall");
+                    }
+
+                    @Override
+                    public void onReceive(String s) {
+                        System.out.println("onReceive:" + s);
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+
+                    }
+
+                    @Override
+                    public void onCompleted() {
+                        System.out.println("onCompleted");
+                    }
+                });
             }
         });
     }

@@ -4,7 +4,22 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.tencent.rxjava2.R;;
+import com.tencent.rxjava2.R;
+
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
+
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.FlowableEmitter;
+import io.reactivex.FlowableOnSubscribe;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 
 public class Lesson5_1Activity extends AppCompatActivity {
@@ -51,75 +66,75 @@ public class Lesson5_1Activity extends AppCompatActivity {
         findViewById(R.id.btnRxJava2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Observable.
-//                        create(new ObservableOnSubscribe<String>() {
-//                            @Override
-//                            public void subscribe(ObservableEmitter<String> e) throws Exception {
-//                                if (!e.isDisposed()) {
-//                                    System.out.println("currentThread:" + Thread.currentThread());
-//                                    e.onNext("test");
-//                                    e.onComplete();
-//                                }
-//                            }
-//                        }).
-//                        subscribeOn(Schedulers.newThread()).
-//                        observeOn(AndroidSchedulers.mainThread()).
-//                        subscribe(new Observer<String>() {
-//                            @Override
-//                            public void onSubscribe(Disposable d) {
-//
-//                            }
-//
-//                            @Override
-//                            public void onNext(String value) {
-//                                System.out.println("onNext:" + value + "currentThread:" + Thread.currentThread());
-//                            }
-//
-//                            @Override
-//                            public void onError(Throwable e) {
-//
-//                            }
-//
-//                            @Override
-//                            public void onComplete() {
-//
-//                            }
-//                        });
-//
-//                Flowable.
-//                        create(new FlowableOnSubscribe<String>() {
-//                            @Override
-//                            public void subscribe(FlowableEmitter<String> e) throws Exception {
-//                                if (!e.isCancelled()) {
-//                                    System.out.println("currentThread:" + Thread.currentThread());
-//                                    e.onNext("test");
-//                                    e.onComplete();
-//                                }
-//                            }
-//                        }, BackpressureStrategy.DROP).
-//                        subscribeOn(Schedulers.newThread()).
-//                        observeOn(AndroidSchedulers.mainThread()).
-//                        subscribe(new Subscriber<String>() {
-//                            @Override
-//                            public void onSubscribe(Subscription s) {
-//                                s.request(Long.MAX_VALUE);
-//                            }
-//
-//                            @Override
-//                            public void onNext(String s) {
-//                                System.out.println("onNext:" + s + "currentThread:" + Thread.currentThread());
-//                            }
-//
-//                            @Override
-//                            public void onError(Throwable t) {
-//
-//                            }
-//
-//                            @Override
-//                            public void onComplete() {
-//
-//                            }
-//                        });
+                Observable.
+                        create(new ObservableOnSubscribe<String>() {
+                            @Override
+                            public void subscribe(ObservableEmitter<String> e) throws Exception {
+                                if (!e.isDisposed()) {
+                                    System.out.println("currentThread:" + Thread.currentThread());
+                                    e.onNext("test");
+                                    e.onComplete();
+                                }
+                            }
+                        }).
+                        subscribeOn(Schedulers.newThread()).
+                        observeOn(AndroidSchedulers.mainThread()).
+                        subscribe(new Observer<String>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
+
+                            }
+
+                            @Override
+                            public void onNext(String value) {
+                                System.out.println("onNext:" + value + "currentThread:" + Thread.currentThread());
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onComplete() {
+
+                            }
+                        });
+
+                Flowable.
+                        create(new FlowableOnSubscribe<String>() {
+                            @Override
+                            public void subscribe(FlowableEmitter<String> e) throws Exception {
+                                if (!e.isCancelled()) {
+                                    System.out.println("currentThread:" + Thread.currentThread());
+                                    e.onNext("test");
+                                    e.onComplete();
+                                }
+                            }
+                        }, BackpressureStrategy.DROP).
+                        subscribeOn(Schedulers.newThread()).
+                        observeOn(AndroidSchedulers.mainThread()).
+                        subscribe(new Subscriber<String>() {
+                            @Override
+                            public void onSubscribe(Subscription s) {
+                                s.request(Long.MAX_VALUE);
+                            }
+
+                            @Override
+                            public void onNext(String s) {
+                                System.out.println("onNext:" + s + "currentThread:" + Thread.currentThread());
+                            }
+
+                            @Override
+                            public void onError(Throwable t) {
+
+                            }
+
+                            @Override
+                            public void onComplete() {
+
+                            }
+                        });
             }
         });
     }

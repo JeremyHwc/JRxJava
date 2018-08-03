@@ -6,10 +6,6 @@ import android.view.View;
 
 import com.tencent.rxjava1.R;
 
-import rx.Observable;
-import rx.Observer;
-import rx.Subscriber;
-import rx.Subscription;
 
 public class Lesson3_1Activity extends AppCompatActivity {
 
@@ -21,37 +17,32 @@ public class Lesson3_1Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Observable.OnSubscribe<String> onSubscribe = new Observable.OnSubscribe<String>() {
-                    @Override
-                    public void call(Subscriber<? super String> subscriber) {
-                        if (!subscriber.isUnsubscribed()) {
-                            subscriber.onNext("test");
-                            subscriber.onCompleted();
-                        }
-                    }
-                };
-
-                Observable<String> observable = Observable.create(onSubscribe);
-
-                Observer<String> observer = new Observer<String>() {
-
-                    @Override
-                    public void onCompleted() {
-                        System.out.println("onCompleted");
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(String s) {
-                        System.out.println("onNext:" + s);
-                    }
-                };
-
-                Subscription tSubscription = observable.subscribe(observer);
+//                Subscription tSubscription = Observable.
+//                        create(new Observable.OnSubscribe<String>() {
+//                            @Override
+//                            public void call(Subscriber<? super String> subscriber) {
+//                                if (!subscriber.isUnsubscribed()) {
+//                                    subscriber.onNext("test");
+//                                    subscriber.onCompleted();
+//                                }
+//                            }
+//                        }).
+//                        subscribe(new Observer<String>() {
+//                            @Override
+//                            public void onCompleted() {
+//                                System.out.println("onCompleted");
+//                            }
+//
+//                            @Override
+//                            public void onError(Throwable e) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onNext(String s) {
+//                                System.out.println("onNext:" + s);
+//                            }
+//                        });
             }
         });
 

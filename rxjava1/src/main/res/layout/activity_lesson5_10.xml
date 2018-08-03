@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.sxdsf.sample.chapter5.lesson10.Lesson5_10Activity">
+    tools:context="com.tencent.rxjava1.chapter5.lesson10.Lesson5_10Activity">
 
     <Button
         android:id="@+id/async"

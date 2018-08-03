@@ -6,6 +6,12 @@ import android.view.View;
 
 import com.tencent.rxjava1.R;
 
+import rx.Observable;
+import rx.Observer;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
 
 public class Lesson5_1Activity extends AppCompatActivity {
 
@@ -16,35 +22,35 @@ public class Lesson5_1Activity extends AppCompatActivity {
         findViewById(R.id.btnRxJava1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Observable.
-//                        create(new Observable.OnSubscribe<String>() {
-//                            @Override
-//                            public void call(Subscriber<? super String> subscriber) {
-//                                if (!subscriber.isUnsubscribed()) {
-//                                    System.out.println("currentThread:" + Thread.currentThread());
-//                                    subscriber.onNext("test");
-//                                    subscriber.onCompleted();
-//                                }
-//                            }
-//                        }).
-//                        subscribeOn(Schedulers.newThread()).
-//                        observeOn(AndroidSchedulers.mainThread()).
-//                        subscribe(new Observer<String>() {
-//                            @Override
-//                            public void onCompleted() {
-//
-//                            }
-//
-//                            @Override
-//                            public void onError(Throwable e) {
-//
-//                            }
-//
-//                            @Override
-//                            public void onNext(String s) {
-//                                System.out.println("onNext:" + s + "currentThread:" + Thread.currentThread());
-//                            }
-//                        });
+                Observable.
+                        create(new Observable.OnSubscribe<String>() {
+                            @Override
+                            public void call(Subscriber<? super String> subscriber) {
+                                if (!subscriber.isUnsubscribed()) {
+                                    System.out.println("currentThread:" + Thread.currentThread());
+                                    subscriber.onNext("test");
+                                    subscriber.onCompleted();
+                                }
+                            }
+                        }).
+                        subscribeOn(Schedulers.newThread()).
+                        observeOn(AndroidSchedulers.mainThread()).
+                        subscribe(new Observer<String>() {
+                            @Override
+                            public void onCompleted() {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onNext(String s) {
+                                System.out.println("onNext:" + s + "currentThread:" + Thread.currentThread());
+                            }
+                        });
             }
         });
 

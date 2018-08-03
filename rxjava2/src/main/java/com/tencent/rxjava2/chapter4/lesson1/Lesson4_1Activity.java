@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.tencent.rxjava2.R;;
+import com.tencent.rxjava2.R;
 
 
 public class Lesson4_1Activity extends AppCompatActivity {

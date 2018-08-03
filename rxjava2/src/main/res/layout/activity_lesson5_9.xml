@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.tencent.rxjava1.chapter5.lesson9.Lesson5_9Activity">
 
     <Button
         android:id="@+id/async"

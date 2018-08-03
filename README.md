@@ -131,24 +131,186 @@
             
 ### 3-6 RxJava2基本元素源码分析(有背压)
     RxJava2 有背压时的基本元素
-        Flowable
-        Subscriber
-        Subscription
-        FlowableOnSubscribe
-        Emitter
+        Flowable:
+            易流动的 ---> 被观察者，支持背压；
+            通过Flowable创建一个可观察的序列（create方法）；
+            通过subscribe去注册一个观察者。
+            
+        Subscriber:
+            一个单独接口，和Observer的方法类似；
+            作为Flowable的subscribe方法的参数。
+        Subscription:
+            订阅，和RxJava1的有所不同；
+            支持背压，有用于背压的request方法。
+        FlowableOnSubscribe:
+            当订阅时会触发此接口调用；
+            在Flowable内部，实际作用是向观察者发射数据。
+        Emitter:
+            一个发射数据的接口，和Observer的方法类似；
+            本质是对Observer和Subscriber的包装。
         
     Flowable 和 Observable 的实现方式及原理是一样的，只是Flowable里面多了一个背压策略。
     
-### 3-7 实战基本元素(RxJava1)上   
+### 实战基本元素
+    RxJava1：
+    
     五大元素.仿
+    
         RxJava1 元素实战：
             Observable ---> Caller
+                            打电话的人（被观察者） ---> 发数据的一方
+                            通过create()方法创建
+                            通过call方法去打给接电话的人（观察者）
             Observer ---> Callee
+                            接电话的人（观察者）---> 接受数据的一方
+                            作为call的call方法的参数
             Subscription ---> Calling
+                            描述打电话这件事
+                            用于取消挂掉电话和获取当前的是否在打电话
             OnSubscribe ---> OnCall
+                            当打电话时会出发此接口调用
+                            作用于caller，向接电话的人发送通话内容
             Subscriber ---> Receiver  
+                            实现了Callee和Calling；
+                            接电话的人挂掉电话
     
+    RxJava2：
+        无背压：
+            Observable ---> Caller
+            Observer ---> Callee
+            Disposable ---> Release
+            ObservableOnSubscribe ---> OnCall
+            Emitter ---> Emitter
     
-    
-    
+### 章节回顾
+    响应式变成思想概念
+        响应式编程是一种面向 数据流 和 变化传播 的 编程范式
+        数据流是只能以事先规定好的顺序被读取一次的数据的一个序列
+        变化传播类似于观察者模式，变化了要通知别人
+        编程范式是指计算机编程的基本风格或典范模式，如面向对象、过程编程都是编程范式
         
+        如何体现：
+            响应式，反应式 --- 基于注册回调的方式运行
+            数据流 --- 通过onNext方法来发射数据
+            编程范式 --- 后面讲到
+            变化传播 --- 后面讲到
+            
+    RxJava基本元素
+    
+    基本元素是如何体现响应式编程思想的
+    
+    案例演练：苹果汁流水线
+        1.将苹果一个一个放上履带
+        
+# 第4章 Operator操作符变换—源码解析与案例实践    
+    操作符：
+        将发出的数据进行处理并再发送
+    RxJava1操作符：
+        （1）Func1接口
+        （2）Operator接口
+    RxJava2操作符：
+        （1）Function接口
+        （2）AbstractObservableWithUpstream抽象类
+    变换的原理
+        lift操作符 --- 变换的原理
+        
+    Operator操作符变换原理    
+    RxJava1源码分析变换的原理 --- 操作符lift
+    
+## 4-2 RxJava1操作符源码分析
+    lisft操作符 接收原OnSubscribe和当前的Operater
+        （1）接收原OnSubscribe和当前的Operator；
+        （2）创建一个新的OnSubscribe并返回新的Observable；
+        （3）用新的Subscriber包裹旧的Subscriber；
+        （4）在新的Subscriber里做完变换再传给旧的Subscriber；
+        类似于代理机制
+        现实中的案例 ---- 寄快递
+    
+## 4-3 RxJava2操作符源码分析
+    AbstractObservableWithUpstream抽象类(无背压版)
+        (1)继承此类
+        (2)利用其subscribeActual方法
+        (3)用原Observable去subscribe变换后的Observer
+    AbstractFlowableWithUpstream抽象类(有背压版)
+        (1)继承此类
+        (2)利用其subscribeActual方法
+        (3)用原Flowable去subscribe变换后的Subscriber 
+        
+    Operator接口
+        (1)实现此接口
+        (2)在subscribeActual方法中做变换
+        (3)用于扩展自定义操作符
+    分析
+        RxJava1和RxJava2的实现方式在本质上没有什么区别，类似于代理机制。
+        现实中的案例 --- 寄快递
+## 4-4 实战操作符RxJava1
+
+## 4-7 章节回顾
+    （1）响应式编程思想概念
+        响应式编程是一种面向 数据流 和 变化传播 的 编程范式
+    （2）Operator操作符变换原理 
+        
+    （3）Operator操作符是如何体现响应式编程思想的
+        变化传播 --- 通过操作符实现变化，并能向下传播
+    
+# 第5章 Scheduler线程变换—源码解析与案例实践
+## 5-1 线程变换简介
+    让代码可以再不同的线程执行
+    subscribeOn()----订阅时的线程
+    observeOn()---- 接收时的线程
+    Scheduler ---- 实际做线程变换的
+    
+    RxJava1线程变换
+        （1）Scheduler调度者
+        （2）Operator操作符接口
+        （3）lift核心操作符
+        
+    RxJava1线程变换
+        （1）Scheduler调度者
+        （2）AbstractObservableWithUpstream抽象类
+        
+    分析
+        现实中的案例 --- 下载电影看
+        
+## 5-2 Scheduler源码分析(RxJava1)
+    1.Scheduler调度者源码分析（RxJava1）
+        (1)Scheduler抽象类
+        (2)Worker --- 真正做线程调度的类
+        (3)Action0 --- 在线程中执行的操作
+        (4)schedule --- 实际做线程调度的方法，入参为Action0
+        具体流程：
+            传入不同Scheduler来使用不同的线程
+            用Scheduler创建Worker来使用真正的线程池
+            传入具体可操作Action0
+            通过schedule方法来实现调度
+        
+        Android中的Scheduler
+            通过Handler和Looper来实现执行在主线程    
+## 5-3 Scheduler调度者源码分析(RxJava2)
+    1.Scheduler调度者源码分析（RxJava2）
+        （1）Scheduler抽象类
+        （2）Worker --- 真正做线程调度的类
+        （3）Runnable --- 在线程中执行的操作
+        （4）schedule --- 做线程调度的方法，入参为Runnable
+        
+        传入不同Scheduler来使用不同的线程
+        用Scheduler创建Worker来使用真正的线程池
+        传入具体操作Runnable
+        通过schedule方法来实现调度
+        
+## 5-6 subscribeOn原理分析(RxJava1)
+### subscribeOn原理
+    （1）通过OnSubscribe来做文章
+    （2）利用Scheduler将发出动作放到线程中执行
+    分析：
+        类似于代理机制
+        现实中的案例 --- 类似于找了一个中介
+## 5-7 subscribeOn原理分析(RxJava2无背压)
+    （1）继承AbstractObservableWithUpstream
+    （2）实现subscribeActual方法
+    （3）利用Scheduler将发出动作放到线程中执行
+        
+# 第7章 RxJava+Retrofit+MVP综合案例
+    RxJava + Retrofit
+        (1)利用CallAdapter进行适配 
+        (2)将返回值转换成Observable对象

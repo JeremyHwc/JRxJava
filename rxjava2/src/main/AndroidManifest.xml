@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.tencent.rxjava2">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -34,8 +36,6 @@
         </activity>
         <activity android:name=".chapter5.lesson1.Lesson5_1Activity">
         </activity>
-        <!--<activity android:name="chapter5.lesson4.Lesson5_4Activity">-->
-        <!--</activity>-->
         <activity android:name=".chapter5.lesson9.Lesson5_9Activity">
         </activity>
         <activity android:name=".chapter5.lesson10.Lesson5_10Activity">
@@ -53,6 +53,16 @@
         <activity android:name=".chapter6.lesson4.Lesson6_4Activity">
         </activity>
         <activity android:name=".chapter6.lesson5.Lesson6_5Activity">
+        </activity>
+        <activity android:name=".chapter7.lesson2.Lesson7_2Activity">
+        </activity>
+        <activity android:name=".chapter7.lesson3.Lesson7_3Activity">
+        </activity>
+        <activity android:name=".chapter3.lesson10.Lesson3_10Activity">
+        </activity>
+        <activity android:name=".chapter4.lesson8.Lesson4_8Activity">
+        </activity>
+        <activity android:name=".chapter7.lesson4.Lesson7_4Activity">
         </activity>
     </application>
 

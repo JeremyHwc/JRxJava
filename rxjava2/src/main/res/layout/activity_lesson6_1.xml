@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.sxdsf.sample.chapter6.lesson1.Lesson6_1Activity">
+    tools:context="com.tencent.rxjava1.chapter6.lesson1.Lesson6_1Activity">
 
     <Button
         android:id="@+id/btnRxJava1"
