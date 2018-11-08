@@ -9,7 +9,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Predicate;
 
 /**
- * com.tencent.rxjava1.chapter4.lesson8.Cache
+ * com.tencent.rxjava2.chapter4.lesson8.Cache
  *
  * @author SXDSF
  * @date 2017/12/5 上午10:45

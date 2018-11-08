@@ -1,10 +1,10 @@
 package com.tencent.rxjava2.chapter7.lesson3;
 
-import com.tencent.rxjava1.chapter7.lesson2.BasePresenter;
-import com.tencent.rxjava1.chapter7.lesson2.BaseView;
+import com.tencent.rxjava2.chapter7.lesson2.BasePresenter;
+import com.tencent.rxjava2.chapter7.lesson2.BaseView;
 
 /**
- * com.tencent.rxjava1.chapter7.lesson3.Lesson7_3Contract
+ * com.tencent.rxjava2.chapter7.lesson3.Lesson7_3Contract
  *
  * @author SXDSF
  * @date 2017/12/4 下午11:55

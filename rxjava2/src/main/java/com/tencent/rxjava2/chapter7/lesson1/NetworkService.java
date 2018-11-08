@@ -22,7 +22,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * com.tencent.rxjava1.chapter7.lesson1.NetworkService
+ * com.tencent.rxjava2.chapter7.lesson1.NetworkService
  *
  * @author SXDSF
  * @date 2017/11/29 上午11:48

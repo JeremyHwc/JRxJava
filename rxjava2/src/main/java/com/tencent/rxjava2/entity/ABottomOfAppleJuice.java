@@ -1,7 +1,7 @@
 package com.tencent.rxjava2.entity;
 
 /**
- * com.tencent.rxjava1.entity.ABottomOfAppleJuice
+ * com.tencent.rxjava2.entity.ABottomOfAppleJuice
  *
  * @author SXDSF
  * @date 2017/11/29 上午11:47

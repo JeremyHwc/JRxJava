@@ -9,7 +9,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * com.tencent.rxjava1.chapter4.lesson8.NetworkService
+ * com.tencent.rxjava2.chapter4.lesson8.NetworkService
  *
  * @author SXDSF
  * @date 2017/12/5 上午10:25

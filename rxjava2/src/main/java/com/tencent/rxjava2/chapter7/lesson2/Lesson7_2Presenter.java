@@ -1,13 +1,13 @@
 package com.tencent.rxjava2.chapter7.lesson2;
 
 
-import com.tencent.rxjava1.chapter7.lesson1.NetworkService;
+import com.tencent.rxjava2.chapter7.lesson1.NetworkService;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
 /**
- * com.tencent.rxjava1.chapter7.lesson2.Lesson7_2Presenter
+ * com.tencent.rxjava2.chapter7.lesson2.Lesson7_2Presenter
  *
  * @author SXDSF
  * @date 2017/12/3 下午10:25

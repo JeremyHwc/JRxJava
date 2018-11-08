@@ -1,6 +1,7 @@
 package com.tencent.rxjava2.chapter7.lesson3;
 
 import com.google.gson.Gson;
+import com.tencent.rxjava2.chapter7.lesson1.NetworkService;
 
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
@@ -10,7 +11,7 @@ import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * com.tencent.rxjava1.chapter7.lesson3.Lesson7_3Presenter
+ * com.tencent.rxjava2.chapter7.lesson3.Lesson7_3Presenter
  *
  * @author SXDSF
  * @date 2017/12/4 下午11:56

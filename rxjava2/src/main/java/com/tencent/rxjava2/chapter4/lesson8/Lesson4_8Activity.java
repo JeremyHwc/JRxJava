@@ -7,12 +7,12 @@ import android.view.View;
 
 import com.jakewharton.rxbinding2.view.RxView;
 import com.tencent.rxjava2.R;
-import com.tencent.rxjava1.entity.ABottomOfAppleJuice;
-import com.tencent.rxjava1.entity.ABoxOfAppleJuice;
-import com.tencent.rxjava1.entity.Apple;
-import com.tencent.rxjava1.entity.AppleJuice;
-import com.tencent.rxjava1.entity.AppleWithoutSkin;
-import com.tencent.rxjava1.entity.AssemblyLineHelper;
+import com.tencent.rxjava2.entity.ABottomOfAppleJuice;
+import com.tencent.rxjava2.entity.ABoxOfAppleJuice;
+import com.tencent.rxjava2.entity.Apple;
+import com.tencent.rxjava2.entity.AppleJuice;
+import com.tencent.rxjava2.entity.AppleWithoutSkin;
+import com.tencent.rxjava2.entity.AssemblyLineHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +23,11 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 
-import static com.tencent.rxjava1.entity.AssemblyLineHelper.deliver;
-import static com.tencent.rxjava1.entity.AssemblyLineHelper.fill;
-import static com.tencent.rxjava1.entity.AssemblyLineHelper.juice;
-import static com.tencent.rxjava1.entity.AssemblyLineHelper.pack;
-import static com.tencent.rxjava1.entity.AssemblyLineHelper.retain;
+import static com.tencent.rxjava2.entity.AssemblyLineHelper.deliver;
+import static com.tencent.rxjava2.entity.AssemblyLineHelper.fill;
+import static com.tencent.rxjava2.entity.AssemblyLineHelper.juice;
+import static com.tencent.rxjava2.entity.AssemblyLineHelper.pack;
+import static com.tencent.rxjava2.entity.AssemblyLineHelper.retain;
 
 
 public class Lesson4_8Activity extends AppCompatActivity {

@@ -300,15 +300,147 @@
         
 ## 5-6 subscribeOn原理分析(RxJava1)
 ### subscribeOn原理
+    subscribeOn 用于指定 subscribe() 时所发生的线程
     （1）通过OnSubscribe来做文章
     （2）利用Scheduler将发出动作放到线程中执行
     分析：
         类似于代理机制
         现实中的案例 --- 类似于找了一个中介
+        
+        从源码角度可以看出，内部线程调度是通过 ObservableSubscribeOn来实现的。
+        ObservableSubscribeOn 的核心源码在 subscribeActual 方法中，通过代理的
+        方式使用 SubscribeOnObserver 包装 Observer 后，设置 Disposable 来将 
+        subscribe 切换到 Scheduler 线程中。
 ## 5-7 subscribeOn原理分析(RxJava2无背压)
     （1）继承AbstractObservableWithUpstream
     （2）实现subscribeActual方法
     （3）利用Scheduler将发出动作放到线程中执行
+    
+    线程切换需要注意的：
+        RxJava 内置的线程调度器的确可以让我们的线程切换得心应手，但其中也有些需要注意的地方。
+        
+        .简单地说，subscribeOn() 指定的就是发射事件的线程，observerOn 指定的就是订阅者接收事件的线程。
+        .多次指定发射事件的线程只有第一次指定的有效，也就是说多次调用 subscribeOn() 只有第一次的有效，其余的会被忽略。
+        .但多次指定订阅者接收线程是可以的，也就是说每调用一次 observerOn()，下游的线程就会切换一次。
+        
+## 5-8 subscribeOn原理分析(RxJava2有背压) 
+
+# 第6章 整体变换compose和Transformer原理
+    整体变换简介
+        （1）将一坨变换整合起来放在一起
+        （2）用于固定的变换场景
+        代码示例：
+            以下代码是RxJava2
+            Observable
+                                    .create(new ObservableOnSubscribe<String>() {
+                                        @Override
+                                        public void subscribe(ObservableEmitter<String> e) throws Exception {
+                                            if (!e.isDisposed()) {
+                                                e.onNext("test");
+                                                System.out.println("currentThread:" + Thread.currentThread());
+                                                e.onComplete();
+                                            }
+                                        }
+                                    })
+                                    .compose(new ObservableTransformer<String, String>() {
+                                        @Override
+                                        public ObservableSource<String> apply(Observable<String> upstream) {
+                                            return upstream
+                                                    .subscribeOn(Schedulers.newThread())
+                                                    .observeOn(AndroidSchedulers.mainThread());
+                                        }
+                                    })
+                                    .subscribe(new Observer<String>() {
+            
+                                        @Override
+                                        public void onSubscribe(Disposable d) {
+            
+                                        }
+            
+                                        @Override
+                                        public void onNext(String value) {
+                                            System.out.println("currentThread:" + Thread.currentThread());
+                                            System.out.println("onNext:" + value);
+                                        }
+            
+                                        @Override
+                                        public void onError(Throwable e) {
+            
+                                        }
+            
+                                        @Override
+                                        public void onComplete() {
+            
+                                        }
+                                    });
+                                    
+            Flowable
+                                    .create(new FlowableOnSubscribe<String>() {
+                                        @Override
+                                        public void subscribe(FlowableEmitter<String> e) throws Exception {
+                                            if (!e.isCancelled()) {
+                                                e.onNext("test");
+                                                System.out.println("currentThread:" + Thread.currentThread());
+                                                e.onComplete();
+                                            }
+                                        }
+                                    }, BackpressureStrategy.DROP)
+            
+                                    .compose(new FlowableTransformer<String, String>() {
+                                        @Override
+                                        public Publisher<String> apply(Flowable<String> upstream) {
+                                            return upstream.
+                                                    subscribeOn(Schedulers.newThread()).
+                                                    observeOn(AndroidSchedulers.mainThread());
+                                        }
+                                    })
+                                    .subscribe(new Subscriber<String>() {
+                                        @Override
+                                        public void onSubscribe(Subscription s) {
+                                            s.request(Long.MAX_VALUE);
+                                        }
+            
+                                        @Override
+                                        public void onNext(String s) {
+                                            System.out.println("currentThread:" + Thread.currentThread());
+                                            System.out.println("onNext:" + s);
+                                        }
+            
+                                        @Override
+                                        public void onError(Throwable t) {
+            
+                                        }
+            
+                                        @Override
+                                        public void onComplete() {
+            
+                                        }
+                                    });                        
+        现实中的案例：
+            transformer类似于小学班长收作业交给老师
+            
+    整体变换Transformer原理
+        RxJava1:
+            Transformer接口
+            （1）继承自Func1接口，泛型参数是两个Observable
+            （2）为compose方法的入参
+            （3）传入一个Observable返回一个Observable
+            
+            简单来说就是，observable1.compose(transformer);在transformer里面的call(observable1)方法里
+            面对observable1进行一系列的变换，从而返回一个新的observable2,因此称作整体变换
+            
+        RxJava2:
+            ObservableTransformer和FlowableTransformer
+            （1）有一个apply方法
+            （2）传入一个Observable返回一个新的Observable
+            （3）为compose方法的入参
+            
+    本章回顾
+        （1）响应式编程思想概念
+        （2）整体变换原理
+        （3）整体变换是如何体现响应式编程思想的
+            变化---通过Transformer实现整体变换
+            传播--- 变换后并能向下传播
         
 # 第7章 RxJava+Retrofit+MVP综合案例
     RxJava + Retrofit

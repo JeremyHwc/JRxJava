@@ -3,7 +3,7 @@ package com.tencent.rxjava2.chapter7.lesson3;
 import java.io.Serializable;
 
 /**
- * com.tencent.rxjava1.chapter7.lesson3.Info
+ * com.tencent.rxjava2.chapter7.lesson3.Info
  *
  * @author SXDSF
  * @date 2017/12/5 上午12:01

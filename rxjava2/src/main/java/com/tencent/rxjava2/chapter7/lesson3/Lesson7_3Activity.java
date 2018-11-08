@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.tencent.rxjava2.R;
+
 
 public class Lesson7_3Activity extends AppCompatActivity implements Lesson7_3Contract.View {
 

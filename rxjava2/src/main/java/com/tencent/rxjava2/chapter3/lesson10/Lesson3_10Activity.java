@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.tencent.rxjava2.R;
-import com.tencent.rxjava1.entity.Apple;
+import com.tencent.rxjava2.entity.Apple;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.tencent.rxjava2.chapter7.lesson2;
 
 /**
- * com.tencent.rxjava1.chapter7.lesson2.Lesson7_2Contract
+ * com.tencent.rxjava2.chapter7.lesson2.Lesson7_2Contract
  *
  * @author SXDSF
  * @date 2017/12/3 下午10:21

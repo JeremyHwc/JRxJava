@@ -6,7 +6,7 @@ import java.util.List;
 import io.reactivex.Observable;
 
 /**
- * com.tencent.rxjava1.entity.AssemblyLineHelper
+ * com.tencent.rxjava2.entity.AssemblyLineHelper
  *
  * @author SXDSF
  * @date 2017/12/4 下午4:32

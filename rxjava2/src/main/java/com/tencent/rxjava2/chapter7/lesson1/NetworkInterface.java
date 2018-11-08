@@ -7,7 +7,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 /**
- * com.tencent.rxjava1.chapter7.lesson1.NetworkInterface
+ * com.tencent.rxjava2.chapter7.lesson1.NetworkInterface
  *
  * @author SXDSF
  * @date 2017/11/29 上午11:47

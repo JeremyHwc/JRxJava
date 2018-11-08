@@ -9,7 +9,7 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.functions.Consumer;
 
 /**
- * com.tencent.rxjava1.chapter7.lesson4.Lesson7_4Presenter
+ * com.tencent.rxjava2.chapter7.lesson4.Lesson7_4Presenter
  *
  * @author SXDSF
  * @date 2017/12/5 下午2:37
