@@ -446,3 +446,95 @@
     RxJava + Retrofit
         (1)利用CallAdapter进行适配 
         (2)将返回值转换成Observable对象
+    MVP模式
+        M:提供数据
+        V:视图层
+        P:负责业务逻辑
+        （1）MVP模式的概念和分层思想
+            简单描述：V -> P -> M , M -> P -> V
+        （2）RxJava + Retrofit 作为M层提供数据
+        
+    完整案例：
+        1.一个接口的数据依赖于另外一个接口
+            NetworkService
+                            .getInterface()
+                            .pre()
+                            .subscribeOn(Schedulers.io())
+                            .map(new Function<String, Info>() {
+                                @Override
+                                public Info apply(String s) throws Exception {
+                                    return new Gson().fromJson(s, Info.class);
+                                }
+                            })
+                            .flatMap(new Function<Info, ObservableSource<String>>() {
+                                @Override
+                                public ObservableSource<String> apply(Info info) throws Exception {
+                                    return NetworkService.getInterface().doSomething(info.name);
+                                }
+                            })
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Observer<String>() {
+                                @Override
+                                public void onSubscribe(Disposable d) {
+            
+                                }
+            
+                                @Override
+                                public void onNext(String value) {
+                                    mView.update(value + System.currentTimeMillis());
+                                }
+            
+                                @Override
+                                public void onError(Throwable e) {
+            
+                                }
+            
+                                @Override
+                                public void onComplete() {
+            
+                                }
+                            });
+        2.RxJava结合Retrofit结合MVP完整案例
+            （1）不用RxBinding,如何实现防抖动
+            （2）不用RxBinding,如何实现进行下一个请求取消上一个请求
+                if (mEmitter == null) {
+                            //防抖动
+                            Observable.
+                                    create(new ObservableOnSubscribe<Object>() {
+                                        @Override
+                                        public void subscribe(ObservableEmitter<Object> e) throws Exception {
+                                            mEmitter = e;
+                                        }
+                                    }).
+                                    throttleFirst(1500, TimeUnit.MILLISECONDS).
+                                    subscribe(new Consumer<Object>() {
+                                        @Override
+                                        public void accept(Object s) throws Exception {
+                                            mView.update("就不让疯狂点击" + System.currentTimeMillis());
+                                        }
+                                    });
+                            //进行下一个请求取消上一个请求
+                            Observable.
+                                    create(new ObservableOnSubscribe<Object>() {
+                                        @Override
+                                        public void subscribe(ObservableEmitter<Object> e) throws Exception {
+                                            mEmitter = e;
+                                        }
+                                    }).
+                                    switchMap(new Function<Object, ObservableSource<Integer>>() {
+                                        @Override
+                                        public ObservableSource<Integer> apply(Object o) throws Exception {
+                                            return NetworkService.network();
+                                        }
+                                    }).
+                                    subscribe(new Consumer<Integer>() {
+                                        @Override
+                                        public void accept(Integer i) throws Exception {
+                                            mView.update("当前的计数是:" + i);
+                                        }
+                                    });
+                        }
+                
+                        if (!mEmitter.isDisposed()) {
+                            mEmitter.onNext("");
+                        }

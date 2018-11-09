@@ -8,7 +8,8 @@ import android.widget.TextView;
 import com.tencent.rxjava2.R;
 
 
-public class Lesson7_2Activity extends AppCompatActivity implements Lesson7_2Contract.View {
+public class Lesson7_2Activity extends AppCompatActivity
+        implements Lesson7_2Contract.View {
 
     private TextView tvText;
 
@@ -19,7 +20,7 @@ public class Lesson7_2Activity extends AppCompatActivity implements Lesson7_2Con
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lesson7_2);
         mPresenter = new Lesson7_2Presenter(this);
-        tvText = (TextView) findViewById(R.id.tvText);
+        tvText = findViewById(R.id.tvText);
         findViewById(R.id.async).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

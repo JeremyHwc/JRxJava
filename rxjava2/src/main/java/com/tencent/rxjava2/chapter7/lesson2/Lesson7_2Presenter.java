@@ -22,9 +22,11 @@ public class Lesson7_2Presenter extends Lesson7_2Contract.Presenter {
 
     @Override
     void loadData() {
-        NetworkService.getInterface().json().
-                compose(new NetworkService.NetworkTransformer<String>()).
-                subscribe(new Observer<String>() {
+        NetworkService
+                .getInterface()
+                .json()
+                .compose(new NetworkService.NetworkTransformer<String>())
+                .subscribe(new Observer<String>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 

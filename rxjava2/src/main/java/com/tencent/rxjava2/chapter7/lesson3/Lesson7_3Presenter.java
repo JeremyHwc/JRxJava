@@ -26,22 +26,24 @@ public class Lesson7_3Presenter extends Lesson7_3Contract.Presenter {
 
     @Override
     void loadData() {
-        NetworkService.getInterface().pre().
-                subscribeOn(Schedulers.io()).
-                map(new Function<String, Info>() {
+        NetworkService
+                .getInterface()
+                .pre()
+                .subscribeOn(Schedulers.io())
+                .map(new Function<String, Info>() {
                     @Override
                     public Info apply(String s) throws Exception {
                         return new Gson().fromJson(s, Info.class);
                     }
-                }).
-                flatMap(new Function<Info, ObservableSource<String>>() {
+                })
+                .flatMap(new Function<Info, ObservableSource<String>>() {
                     @Override
                     public ObservableSource<String> apply(Info info) throws Exception {
                         return NetworkService.getInterface().doSomething(info.name);
                     }
-                }).
-                observeOn(AndroidSchedulers.mainThread()).
-                subscribe(new Observer<String>() {
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<String>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 

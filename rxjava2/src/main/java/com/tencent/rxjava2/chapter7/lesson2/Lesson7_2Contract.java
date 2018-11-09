@@ -11,7 +11,6 @@ package com.tencent.rxjava2.chapter7.lesson2;
 public interface Lesson7_2Contract {
 
     interface View extends BaseView<Presenter> {
-
         void update(String text);
     }
 
